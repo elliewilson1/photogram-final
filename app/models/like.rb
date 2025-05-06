@@ -9,4 +9,7 @@
 #  photo_id   :integer
 #
 class Like < ApplicationRecord
+  # Direct associations
+  belongs_to :liker, required: true, class_name: "User", foreign_key: "fan_id"
+  belongs_to :photo, required: true, class_name: "Photo", foreign_key: "photo_id"
 end
