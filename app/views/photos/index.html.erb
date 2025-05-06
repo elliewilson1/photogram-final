@@ -8,7 +8,7 @@
 
 <div>
   <div>
-
+    <% if current_user.present? %>
     <form action="/insert_photo" method="post">
       
         <label for="image_url_box">
@@ -28,6 +28,7 @@
         Add photo
       </button>
     </form>
+    <% end %>
   </div>
 </div>
 
