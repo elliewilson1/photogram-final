@@ -5,8 +5,9 @@
   <dd><%= @the_user.private? %>
 
   <dt>Followers</dt>
-  <dd><%= @the_user.username %>
+  <dd><%= @followers.count %>
 
+  <% if @pending_follow_requests.any? %>
     <h4>Pending follow requests</h4>
     <% @pending_follow_requests.each do |a_request| %>
     <ul>
@@ -23,10 +24,11 @@
       </li>
     </ul>
     <% end %>
+  <% end %>
   </dd>
 
   <dt>Following</dt>
-  <dd><%= @the_user.username %>
+  <dd><%= @following.count %>
 </dl>
 
 <nav>
@@ -46,7 +48,7 @@
   </ul>
 </nav>
 
-<h2>Own photos<h2>
+<h2>Own photos (<%= @own_photos.count %>)</h2>
 
 <table border="1">
       <tr>

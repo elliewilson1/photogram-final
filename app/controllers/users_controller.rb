@@ -17,13 +17,22 @@ class UsersController < ApplicationController
     @the_user = matching_user.at(0)
     
     @pending_follow_requests = FollowRequest.where({
-    :recipient_id => @the_user.id,
-    :status       => "pending"
+        :recipient_id => @the_user.id,
+        :status       => "pending"
     })
 
     @own_photos = Photo.where({
-      :owner_id => @the_user.id
-        }).order({ :likes_count => :desc })
+        :owner_id => @the_user.id
+    }).order({ :likes_count => :desc })
+    
+    @followers = FollowRequest.where({ :recipient_id => @the_user.id,
+        :status => "accepted"
+    })
+    
+    @following = FollowRequest.where({
+        :sender_id => @the_user.id,
+        :status => "accepted"
+    })
     
     render({ :template => "users/show" })
   end
