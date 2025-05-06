@@ -18,13 +18,30 @@
     </td>
     <td>
       <% if current_user.present? %>
-        <form action="/insert_follow_request" method="post">
-        <input type="hidden" name="query_recipient_id" value="">
-        <button>
-          Follow
-        </button>
-        </form>
-      <% else %>
+
+      <% accepted = FollowRequest.where({ 
+        :sender_id   => current_user.id,
+        :recipient_id=> a_user.id,
+        :status      => "accepted" }).at(0) %>
+      
+      <% pending = FollowRequest.where({
+        :sender_id => current_user.id,
+        :recipient_id => a_user.id,
+        :status => "pending" }).at(0) %>
+
+        <% if accepted %>
+          <a href="/delete_follow_request/<%= accepted.id %>">Unfollow</a>
+
+        <% elsif pending %>
+          Request sent.<a href="/delete_follow_request/<%= pending.id %>">Cancel</a>
+        <% else %>
+          <form action="/insert_follow_request" method="post">
+            <input type="hidden" name="query_recipient_id">
+
+            <button>Follow</button>
+          </form>
+        <% end %>
+
       <% end %>
     </td>
     <td>

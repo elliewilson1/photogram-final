@@ -7,7 +7,7 @@
   <dt>Followers</dt>
   <dd><%= @followers.count %>
 
-  <% if @pending_follow_requests.any? %>
+  <% if @pending_follow_requests.any? && current_user == @the_user %>
     <h4>Pending follow requests</h4>
     <% @pending_follow_requests.each do |a_request| %>
     <ul>
@@ -24,6 +24,10 @@
       </li>
     </ul>
     <% end %>
+  <% elsif FollowRequest.where({ :sender_id => current_user.id, :recipient_id => @the_user.id, :status => "accepted" }).any? %>
+    <form action="/follow_requests/<%= FollowRequest.where({ :sender_id => current_user.id, :recipient_id => @the_user.id, :status => "accepted"}).at(0).id %>" method="post">
+    <input name="_method" value="delete" type="hidden">
+    <a href="/delete_follow_request/<%= FollowRequest.where({ :sender_id => current_user.id, :recipient_id => @the_user.id, :status => "accepted"}).at(0).id %>">Unfollow</a>
   <% end %>
   </dd>
 
