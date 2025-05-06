@@ -6,8 +6,33 @@
   </head>
 
   <body>
+    <ul>
+      <li>
+        <a href="/users">
+          All users
+        </a>
+      </li>
 
-      <% if notice.present? %>
+      <li>
+        <a href="/photos">
+          All public photos
+        </a>
+      </li>
+      
+      <li>
+        <a href="/users/sign_in">
+          Sign in
+        </a>
+      </li>
+
+      <li>
+        <a href="/users/sign_up">
+          Sign up
+        </a>
+      </li>
+    </ul>
+
+    <% if notice.present? %>
       <div style="color: green">
         <%= notice %>
       </div>
