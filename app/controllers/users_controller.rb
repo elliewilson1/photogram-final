@@ -86,9 +86,35 @@ class UsersController < ApplicationController
     })
     render({ :template => "users/feed" })
   end
-
+  
   def discover
+    the_username = params.fetch("username")
+  
+    matching_users = User.where({ :username => the_username })
+    @the_user       = matching_users.at(0)
+  
+    feed = FollowRequest.where({
+      :sender_id => @the_user.id,
+      :status    => "accepted"
+    })
+    following_user_ids = feed.pluck(:recipient_id)
+  
+    likes = Like.where({ :fan_id => following_user_ids })
+  
+    liked_photo_ids = likes.pluck(:photo_id)
+  
+    @discover_photos = Photo.where({ :id => liked_photo_ids })
+                            .order({ :created_at => :desc })
+  
+    @followers = FollowRequest.where({ 
+        :recipient_id => @the_user.id,
+        :status => "accepted"
+    })
+    
+    @following = FollowRequest.where({
+        :sender_id => @the_user.id,
+        :status => "accepted"
+    })
     render({ :template => "users/discover" })
   end
-
 end
