@@ -14,7 +14,7 @@
       <%= a_user.username %>
     </td>
     <td>
-      <%= a_user.private? %>
+      <%= a_user.private? ? "Yes" : "No" %>
     </td>
     <td>
       <% if current_user.present? %>

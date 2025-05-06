@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   skip_before_action(:authenticate_user!, { :only => [:index] })
   
   def index 
-    matching_users = User.where({}) 
+    matching_users = User.where({}).order({ :username => :asc }) 
     
     @list_of_users = matching_users 
     
