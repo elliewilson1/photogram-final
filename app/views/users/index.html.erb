@@ -36,7 +36,9 @@
           Request sent.<a href="/delete_follow_request/<%= pending.id %>">Cancel</a>
         <% else %>
           <form action="/insert_follow_request" method="post">
-            <input type="hidden" name="query_recipient_id">
+            <input type="hidden" name="query_sender_id" value="<%= current_user.id %>">
+            <input type="hidden" name="query_recipient_id" value="<%= a_user.id %>">
+            <input type="hidden" name="query_status" value="pending">
 
             <button>Follow</button>
           </form>
