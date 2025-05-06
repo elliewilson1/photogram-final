@@ -1,24 +1,17 @@
 <div>
   <div>
     <h1>
-      Photo #<%= @the_photo.id %> details
+      Photo details
     </h1>
 
-    <div>
-      <div>
-        <a href="/photos">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_photo/<%= @the_photo.id %>">
-          Delete photo
-        </a>
-      </div>
-    </div>
-
     <dl>
+      <dt>
+        Image
+      </dt>
+      <dd>
+        <%= @the_photo.image %>
+      </dd>
+
       <dt>
         Caption
       </dt>
@@ -27,19 +20,28 @@
       </dd>
 
       <dt>
-        Image url
-      </dt>
-      <dd>
-        <%= @the_photo.image_url %>
-      </dd>
-
-      <dt>
         Owner
       </dt>
       <dd>
-        <%= @the_photo.owner_id %>
+        <% the_id = @the_photo.owner_id %>
+        <% matching_user = User.where({ :id => the_id }) %>
+        <%= matching_user.at(0).username %>
       </dd>
 
+      <dt>
+        Posted
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_photo.created_at) %> ago
+      </dd>
+      
+      <dt>
+        Likes count
+      </dt>
+      <dd>
+        <%= @the_photo.likes_count %>
+      </dd>
+      
       <dt>
         Comments count
       </dt>
@@ -48,25 +50,16 @@
       </dd>
 
       <dt>
-        Likes count
+        Fans
       </dt>
       <dd>
-        <%= @the_photo.likes_count %>
+        <% @the_photo %>
       </dd>
 
       <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_photo.created_at) %> ago
-      </dd>
+        Add a fan
+      </td>
 
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_photo.updated_at) %> ago
-      </dd>
     </dl>
   </div>
 </div>
