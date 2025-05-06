@@ -8,7 +8,13 @@ Rails.application.routes.draw do
 
   get("/users", { :controller => "users", :action => "index" })
   
-  get("/users/:id", { :controller => "users", :action => "show" })
+  get("/users/:username", { :controller => "users", :action => "show" })
+
+  get("users/:username/liked_photos", { :controller => "users", :action => "likes" })
+
+  get("users/:username/feed", { :controller => "users", :action => "feed" })
+
+  get("users/:username/discover", { :controller => "users", :action => "discover" })
   
   # Routes for the Follow request resource:
 

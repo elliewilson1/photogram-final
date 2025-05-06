@@ -10,9 +10,9 @@ class UsersController < ApplicationController
   end
   
   def show 
-    the_id = params.fetch("id")
+    the_username = params.fetch("username")
 
-    matching_user = User.where({ :id => the_id }) 
+    matching_user = User.where({ :username => the_username }) 
     
     @the_user = matching_user.at(0)
     
@@ -35,6 +35,38 @@ class UsersController < ApplicationController
     })
     
     render({ :template => "users/show" })
+  end
+
+  def likes
+    the_username = params.fetch("username")
+
+    matching_user = User.where({ :username => the_username }) 
+    
+    @the_user = matching_user.at(0)
+    
+    @likes = Like.where({ :fan_id => @the_user.id })
+
+    liked_photo_ids = @likes.pluck(:photo_id)
+
+    @liked_photos = Photo.where({ :id => liked_photo_ids }).order({ :likes_count => :desc })
+
+    @followers = FollowRequest.where({ :recipient_id => @the_user.id,
+        :status => "accepted"
+    })
+    
+    @following = FollowRequest.where({
+        :sender_id => @the_user.id,
+        :status => "accepted"
+    })
+    render({ :template => "users/likes" })
+  end
+
+  def feed
+    render({ :template => "users/feed" })
+  end
+
+  def discover
+    render({ :template => "users/discover" })
   end
 
 end
