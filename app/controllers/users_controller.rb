@@ -62,6 +62,28 @@ class UsersController < ApplicationController
   end
 
   def feed
+    the_username = params.fetch("username")
+
+    matching_user = User.where({ :username => the_username }) 
+    
+    @the_user = matching_user.at(0)
+    
+    @feed = FollowRequest.where({ :sender_id => @the_user.id, :status => "accepted" })
+
+    feed_user_ids = @feed.pluck(:recipient_id)
+
+    feed_photo_ids = Photo.where({ :owner_id => feed_user_ids })
+
+    @feed_photos = Photo.where({ :id => feed_photo_ids }).order({ :likes_count => :desc })
+
+    @followers = FollowRequest.where({ :recipient_id => @the_user.id,
+        :status => "accepted"
+    })
+    
+    @following = FollowRequest.where({
+        :sender_id => @the_user.id,
+        :status => "accepted"
+    })
     render({ :template => "users/feed" })
   end
 
