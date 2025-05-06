@@ -23,3 +23,86 @@
       </li>
     </ul>
     <% end %>
+  </dd>
+
+  <dt>Following</dt>
+  <dd><%= @the_user.username %>
+</dl>
+
+<nav>
+  <ul>
+    <li>
+      <a href="/users/<%= @the_user.username %>">Profile</a>
+    </li>
+    <li>
+      <a href="/users/<%= @the_user.username %>/liked_photos">Liked photos</a>
+    </li>
+    <li>
+      <a href="/users/<%= @the_user.username %>/feed">Feed</a>
+    </li>
+    <li>
+      <a href="/users/<%= @the_user.username %>/discover">Discover</a>
+    </li>
+  </ul>
+</nav>
+
+<h2>Own photos<h2>
+
+<table border="1">
+      <tr>
+        <th>
+          Image
+        </th>
+
+        <th>
+          Owner
+        </th>
+
+        <th>
+          Caption
+        </th>
+
+        <th>
+          Posted
+        </th>
+
+        <th>
+          Likes
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @own_photos.each do |a_photo| %>
+      <tr>
+        <td>
+          <img src="<%= a_photo.image %>">
+        </td>
+
+        <td>
+          <% the_id = a_photo.owner_id %>
+          <% matching_user = User.where({ :id => the_id }) %>
+          <%= matching_user.at(0).username %>
+        </td>
+
+        <td>
+          <%= a_photo.caption %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_photo.created_at) %> ago
+        </td>
+
+        <td>
+          <%= a_photo.likes_count %>
+        </td>
+
+        <td>
+          <a href="/photos/<%= a_photo.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+</table>
