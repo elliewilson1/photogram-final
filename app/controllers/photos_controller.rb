@@ -1,10 +1,14 @@
 class PhotosController < ApplicationController
   skip_before_action(:authenticate_user!, { :only => [:index] })
   def index
-    matching_photos = Photo.all
+    public_user_ids = User.where({ :private => false }).map do |u|
+      u.id
+    end
 
+    matching_photos = Photo.where({ :owner_id => public_user_ids })
+  
     @list_of_photos = matching_photos.order({ :created_at => :desc })
-
+  
     render({ :template => "photos/index" })
   end
 
