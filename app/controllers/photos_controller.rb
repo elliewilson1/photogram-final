@@ -19,6 +19,8 @@ class PhotosController < ApplicationController
 
     @the_photo = matching_photos.at(0)
 
+    # all likes and comments
+
     likes = Like.where({ :photo_id => @the_photo.id })
 
     fan_user_ids = likes.pluck(:fan_id)
@@ -26,6 +28,12 @@ class PhotosController < ApplicationController
     @list_of_fan_names = User.where({ :id => fan_user_ids })
 
     @comments = Comment.where({ :photo_id => @the_photo.id }).order({ :created_at => :asc })
+
+    # likes and comments by the logged-in user
+
+    matching_like = Like.where({ :photo_id => @the_photo.id, :fan_id => current_user.id })
+
+    @the_like = matching_like.at(0)
 
     render({ :template => "photos/show" })
   end
