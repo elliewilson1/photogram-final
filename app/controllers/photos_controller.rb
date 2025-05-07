@@ -25,6 +25,8 @@ class PhotosController < ApplicationController
 
     @list_of_fan_names = User.where({ :id => fan_user_ids })
 
+    @comments = Comment.where({ :photo_id => @the_photo.id }).order({ :created_at => :asc })
+
     render({ :template => "photos/show" })
   end
 

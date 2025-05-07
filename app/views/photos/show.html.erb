@@ -108,12 +108,21 @@
     <th>Posted</th>
   </tr>
 
+  
+  <% @comments.each do |a_comment| %>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>
+      <% the_user = User.where({ :id => a_comment.author_id }).at(0) %>
+      <%= the_user.username %>
+    </td>
+    <td>
+      <%= a_comment.body %>
+    </td>
+    <td>
+      <%= time_ago_in_words(a_comment.created_at) %> ago
+    </td>
   </tr>
-
+  <% end %>
 </table>
 
 <h3>Add a new comment</h3>
