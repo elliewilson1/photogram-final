@@ -7,27 +7,46 @@
   <dt>Followers</dt>
   <dd><%= @followers.count %>
 
-  <% if @pending_follow_requests.any? && current_user == @the_user %>
-    <h4>Pending follow requests</h4>
-    <% @pending_follow_requests.each do |a_request| %>
-    <ul>
-      <li>
-        <%= User.where({ :id => a_request.sender_id }).at(0).username %>
-        <form action="/modify_follow_request/<%= a_request.id %>" method="post">
-        <input name="query_status" value="accepted" type="hidden">
-        <button>Accept</button>
-        </form>
-        <form action="/modify_follow_request/<%= a_request.id %>" method="post">
-        <input name="query_status" value="rejected" type="hidden">
-        <button>Reject</button>
-        </form>
-      </li>
-    </ul>
+  <% accepted_request = FollowRequest.
+    where({
+      :sender_id => current_user.id,
+      :recipient_id => @the_user.id,
+      :status => "accepted" 
+    }).at(0) %>
+
+  <% pending_request = FollowRequest.
+    where({
+      :sender_id => current_user.id,
+      :recipient_id => @the_user.id,
+      :status => "pending"
+    }).at(0) %>
+
+  <% if current_user == @the_user %>
+    <% if @pending_follow_requests.any? %>
+      <h4>Pending follow requests</h4>
+      <% @pending_follow_requests.each do |a_request| %>
+      <ul>
+        <li>
+          <%= User.where({ :id => a_request.sender_id }).at(0).username %>
+          <form action="/modify_follow_request/<%= a_request.id %>" method="post">
+            <input name="query_status" value="accepted" type="hidden">
+            <button>Accept</button>
+          </form>
+          <form action="/modify_follow_request/<%= a_request.id %>" method="post">
+            <input name="query_status" value="rejected" type="hidden">
+            <button>Reject</button>
+          </form>
+        </li>
+      </ul>
+      <% end %>
+    <% else %>
     <% end %>
-  <% elsif FollowRequest.where({ :sender_id => current_user.id, :recipient_id => @the_user.id, :status => "accepted" }).any? %>
-    <form action="/follow_requests/<%= FollowRequest.where({ :sender_id => current_user.id, :recipient_id => @the_user.id, :status => "accepted"}).at(0).id %>" method="post">
-    <input name="_method" value="delete" type="hidden">
-    <a href="/delete_follow_request/<%= FollowRequest.where({ :sender_id => current_user.id, :recipient_id => @the_user.id, :status => "accepted"}).at(0).id %>">Unfollow</a>
+
+  <% elsif accepted_request %>
+    <div>
+      <a href="/delete_follow_request/<%= accepted_request.id %>">Unfollow</a>
+    </div>
+  <% else %>
   <% end %>
   </dd>
 

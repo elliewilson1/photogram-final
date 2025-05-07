@@ -18,16 +18,25 @@ class FollowRequestsController < ApplicationController
   end
 
   def create
-    the_follow_request = FollowRequest.new
-    the_follow_request.sender_id = params.fetch("query_sender_id")
-    the_follow_request.recipient_id = params.fetch("query_recipient_id")
-    the_follow_request.status = params.fetch("query_status")
+    recipient_id = params.fetch("query_recipient_id")
+    matching_user = User.where({ :id => recipient_id }).at(0)
 
-    if the_follow_request.valid?
-      the_follow_request.save
-      redirect_to("/", { :notice => "Follow request created successfully." })
+    the_follow_request = FollowRequest.new
+    the_follow_request.sender_id = current_user.id
+    the_follow_request.recipient_id = recipient_id
+
+    if matching_user.private?
+      the_follow_request.status = "pending"
     else
-      redirect_to("/", { :alert => the_follow_request.errors.full_messages.to_sentence })
+      the_follow_request.status = "accepted"
+    end
+
+    the_follow_request.save
+
+    if the_follow_request.status == "accepted"
+      return redirect_to("/users/" + matching_user.username)
+    else
+      return redirect_to("/", { :notice => "Follow request created successfully." })
     end
   end
 
@@ -50,9 +59,8 @@ class FollowRequestsController < ApplicationController
   def destroy
     the_id = params.fetch("path_id")
     the_follow_request = FollowRequest.where({ :id => the_id }).at(0)
-
     the_follow_request.destroy
 
-    redirect_to("/", { :notice => "Follow request deleted successfully."} )
+    return redirect_to("/users", { :notice => "Follow request deleted successfully." })
   end
 end

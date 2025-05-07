@@ -9,13 +9,24 @@ class UsersController < ApplicationController
     render({ :template => "users/index" })
   end
   
-  def show 
+  def show
     the_username = params.fetch("username")
 
     matching_user = User.where({ :username => the_username }) 
     
-    @the_user = matching_user.at(0)
-    
+    @the_user = matching_user.at(0) 
+
+    if @the_user.private? && 
+      current_user != @the_user && 
+      !FollowRequest.where({
+        :sender_id => current_user.id,
+        :recipient_id => @the_user.id,
+        :status => "accepted"
+      }).any?
+      redirect_to("/users", { :alert => "You're not authorized for that." })
+      return
+    end
+  
     @pending_follow_requests = FollowRequest.where({
         :recipient_id => @the_user.id,
         :status       => "pending"

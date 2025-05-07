@@ -14,32 +14,33 @@
       <%= a_user.username %>
     </td>
     <td>
-      <%= a_user.private? ? "Yes" : "No" %>
-    </td>
-    <td>
-      <% if current_user.present? %>
+      <% if current_user.present? && current_user.id != a_user.id %>
 
-      <% accepted = FollowRequest.where({ 
-        :sender_id   => current_user.id,
-        :recipient_id=> a_user.id,
-        :status      => "accepted" }).at(0) %>
-      
-      <% pending = FollowRequest.where({
-        :sender_id => current_user.id,
-        :recipient_id => a_user.id,
-        :status => "pending" }).at(0) %>
+        <% accepted = FollowRequest.
+        where({
+          :sender_id => current_user.id,
+          :recipient_id => a_user.id,
+          :status => "accepted"
+        }).at(0) %>
+
+        <% pending  = FollowRequest.
+        where({
+          :sender_id    => current_user.id,
+          :recipient_id => a_user.id,
+          :status       => "pending"
+        }).at(0) %>
 
         <% if accepted %>
           <a href="/delete_follow_request/<%= accepted.id %>">Unfollow</a>
 
         <% elsif pending %>
-          Request sent.<a href="/delete_follow_request/<%= pending.id %>">Cancel</a>
+          <form action="/delete_follow_request/<%= pending.id %>" method="post">
+            Request sent.<button type="submit">Cancel</button>
+          </form>
+
         <% else %>
           <form action="/insert_follow_request" method="post">
-            <input type="hidden" name="query_sender_id" value="<%= current_user.id %>">
-            <input type="hidden" name="query_recipient_id" value="<%= a_user.id %>">
-            <input type="hidden" name="query_status" value="pending">
-
+            <input name="query_recipient_id" value="<%= a_user.id %>" type="hidden">
             <button>Follow</button>
           </form>
         <% end %>
