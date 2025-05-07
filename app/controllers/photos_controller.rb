@@ -29,6 +29,8 @@ class PhotosController < ApplicationController
 
     @comments = Comment.where({ :photo_id => @the_photo.id }).order({ :created_at => :asc })
 
+    @comments_count = @comments.count
+
     # likes and comments by the logged-in user
 
     matching_like = Like.where({ :photo_id => @the_photo.id, :fan_id => current_user.id })
