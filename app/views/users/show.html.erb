@@ -14,13 +14,6 @@
       :status => "accepted" 
     }).at(0) %>
 
-  <% pending_request = FollowRequest.
-    where({
-      :sender_id => current_user.id,
-      :recipient_id => @the_user.id,
-      :status => "pending"
-    }).at(0) %>
-
   <% if current_user == @the_user %>
     <% if @pending_follow_requests.any? %>
       <h4>Pending follow requests</h4>
@@ -47,6 +40,10 @@
       <a href="/delete_follow_request/<%= accepted_request.id %>">Unfollow</a>
     </div>
   <% else %>
+    <form action="/insert_follow_request" method="post">
+      <input name="query_recipient_id" value="<%= current_user.id %>" type="hidden">
+      <button>Follow</button>
+    </form>
   <% end %>
   </dd>
 
