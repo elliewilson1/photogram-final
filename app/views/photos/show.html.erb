@@ -1,3 +1,5 @@
+<% current_user.present? %> <% current_user.id %>
+
 <div>
   <div>
     <h1>
@@ -134,6 +136,7 @@
 
 <h3>Add a new comment</h3>
 <form action="/insert_comment" method="post">
+  <input type="hidden" value="<%= current_user.id %>" name="query_author_id" >
   <input type="hidden" value="<%= @the_photo.id %>" name="query_photo_id">
   <label for="browser_comment">Comment</label>
   <textarea id="browser_comment" name="query_body" placeholder="Enter a comment..."></textarea>

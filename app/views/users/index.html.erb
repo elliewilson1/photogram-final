@@ -37,9 +37,10 @@
           <a href="/delete_follow_request/<%= accepted.id %>">Unfollow</a>
 
         <% elsif pending %>
-          <form action="/delete_follow_request/<%= pending.id %>" method="post">
-            Request sent.<button type="submit">Cancel</button>
-          </form>
+          Request sent.
+          <a href="/delete_follow_request/<%= pending.id %>">
+            Cancel
+          </a>
 
         <% else %>
           <form action="/insert_follow_request" method="post">
