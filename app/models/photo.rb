@@ -12,7 +12,7 @@
 #  owner_id       :integer
 #
 class Photo < ApplicationRecord
-  mount_uploader(:image, ImageUploader)
+  mount_uploader :image, ImageUploader
 
   # Direct associations
   belongs_to :user, required: true, class_name: "User", foreign_key: "owner_id"

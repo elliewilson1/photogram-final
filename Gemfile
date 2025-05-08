@@ -84,7 +84,8 @@ gem "http"
 gem "sqlite3", "~> 1.4"
 gem "table_print"
 gem "simple_form"
-gem "carrierwave", "~> 2.0"
+gem "carrierwave"
+gem "cloudinary"
 gem "openai-chat"
 
 group :development do
