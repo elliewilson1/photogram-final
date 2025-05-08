@@ -9,7 +9,7 @@
         Image
       </dt>
       <dd>
-        <img src="<%= @the_photo.image %>">
+        <img src="<%= @the_photo.image.url %>">
       </dd>
 
       <dt>
@@ -91,7 +91,7 @@
         <dd>
           <form action="/modify_photo/<%= @the_photo.id %>" method="post">
             <label for="browser_image">Image URL</label>
-            <input id="browser_image" type="text" name="query_image" placeholder="Enter a URL for the image..." value="<%= @the_photo.image %>">
+            <input id="browser_image" type="text" name="query_image" placeholder="Enter a URL for the image..." value="<%= @the_photo.image.url %>">
             <label for="browser_caption">Caption</label>
             <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."><%= @the_photo.caption %></textarea>
             <button>Update photo</button>
