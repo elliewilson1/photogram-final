@@ -5,7 +5,52 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
   </head>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family=Questrial&display=swap" rel="stylesheet">
+  
   <body>
+    <style>
+      html {
+        min-height: 100%;
+      }
+
+      body {
+        min-height: 100%;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background: linear-gradient(105deg, #c359b3, #d07ac8, #de99dc, #ebb7ee, #f9d5ff); /* made at https://learnui.design/tools/gradient-generator.html */
+        color: rgba(255, 255, 255, 1.0);
+        a {
+          color: rgba(255, 255, 255, 1.0);
+          text-decoration: none;
+        }
+        font-family: "Alegreya";
+      }
+
+<!--      .main-container {
+        display: flex;
+        align-items: flex-start;
+      }-->
+
+      .main-heading {
+        font-family: "Questrial";
+      }
+
+      .action-button {
+        border-radius: 40px;
+        font-family: "Questrial";
+      }
+
+      .upload-button {
+        font-family: "Questrial";
+      }
+
+      .placeholder-text {
+        font-family: "Questrial";
+      }
+    </style>
     <% if current_user.present? %>
       <ul>
         <li>

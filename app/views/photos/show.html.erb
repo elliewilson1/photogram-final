@@ -1,6 +1,6 @@
 <div>
   <div>
-    <h1>
+    <h1 class="main-heading">
       Photo Details
     </h1>
 
@@ -80,7 +80,7 @@
           <form action="/insert_like" method="post">
             <input type="hidden" value="<%= @the_photo.id %>" name="query_photo_id">
             <input type="hidden" value="<%= current_user.id %>" name="query_fan_id">
-            <button>Like</button>
+            <button class="action-button">Like</button>
         </form>
         <% end %>
       </dd>
@@ -91,13 +91,13 @@
         <dd>
           <form action="/modify_photo/<%= @the_photo.id %>" method="post" enctype=”multipart/form-data”>
             <label for="browser_image">Image URL</label>
-            <input id="browser_image" type="text" name="query_image_url" placeholder="Enter a URL for the image..." value="<%= @the_photo.image.url %>">
+            <input id="browser_image" type="text" name="query_image_url" placeholder="Enter a URL for the image..." value="<%= @the_photo.image.url %>" class="placeholder-text">
             <label for="browser_caption">Caption</label>
-            <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."><%= @the_photo.caption %></textarea>
+            <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..." class="placeholder-text"><%= @the_photo.caption %></textarea>
             <input type="hidden" name="query_owner_id" value="<%= @the_photo.owner_id %>">
             <input type="hidden" name="query_comments_count" value="<%= @the_photo.comments_count %>">
             <input type="hidden" name="query_likes_count" value="<%= @the_photo.likes_count %>">            
-            <button>Update photo</button>
+            <button class="action-button">Update photo</button>
           </form>
         </dd>
         <dt>
@@ -148,6 +148,6 @@
   <input type="hidden" value="<%= current_user.id %>" name="query_author_id" >
   <input type="hidden" value="<%= @the_photo.id %>" name="query_photo_id">
   <label for="browser_comment">Comment</label>
-  <textarea id="browser_comment" name="query_body" placeholder="Enter a comment..."></textarea>
-  <button>Add comment</button>
+  <textarea id="browser_comment" name="query_body" placeholder="Enter a comment..." class="placeholder-text"></textarea>
+  <button class="action-button">Add comment</button>
 </form>

@@ -23,11 +23,11 @@
           <%= User.where({ :id => a_request.sender_id }).at(0).username %>
           <form action="/modify_follow_request/<%= a_request.id %>" method="post">
             <input name="query_status" value="accepted" type="hidden">
-            <button>Accept</button>
+            <button class="action-button">Accept</button>
           </form>
           <form action="/modify_follow_request/<%= a_request.id %>" method="post">
             <input name="query_status" value="rejected" type="hidden">
-            <button>Reject</button>
+            <button class="action-button">Reject</button>
           </form>
         </li>
       </ul>
@@ -42,7 +42,7 @@
   <% else %>
     <form action="/insert_follow_request" method="post">
       <input name="query_recipient_id" value="<%= current_user.id %>" type="hidden">
-      <button>Follow</button>
+      <button class="action-button">Follow</button>
     </form>
   <% end %>
   </dd>

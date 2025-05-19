@@ -1,4 +1,4 @@
-<h1>List of users</h1>
+<h1 class="main-heading">List of users</h1>
 
 <table border="1">
   <tr>
@@ -45,7 +45,7 @@
         <% else %>
           <form action="/insert_follow_request" method="post">
             <input name="query_recipient_id" value="<%= a_user.id %>" type="hidden">
-            <button>Follow</button>
+            <button class="action-button">Follow</button>
           </form>
         <% end %>
 
