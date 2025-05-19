@@ -116,6 +116,7 @@
     <th>Commenter</th>
     <th>Comment</th>
     <th>Posted</th>
+    <th></th>
   </tr>
 
   
@@ -130,6 +131,13 @@
     </td>
     <td>
       <%= time_ago_in_words(a_comment.created_at) %> ago
+    </td>
+    <td>
+      <% if current_user.id == a_comment.author_id %>
+        <a href="/delete_comment/<%= a_comment.id %>">Delete this comment</a>
+      <% elsif current_user.id == @the_photo.owner_id %>
+        <a href="/delete_comment/<%= a_comment.id %>">Delete this comment</a>
+      <% end %>
     </td>
   </tr>
   <% end %>

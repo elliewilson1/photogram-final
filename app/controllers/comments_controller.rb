@@ -53,6 +53,6 @@ class CommentsController < ApplicationController
 
     the_comment.destroy
 
-    redirect_to("/comments", { :notice => "Comment deleted successfully."} )
+    redirect_to("/photos/#{the_comment.photo_id}", { :notice => "Comment deleted successfully."} )
   end
 end
